@@ -50,7 +50,6 @@ def plot_loss(filename, title):
 
 title_list = ["Delay and sum beamforming", "MVDR beamforming", "GeV beamforming", "Single channel",
 			  "Early concatenation", "BeamformIt", "Beamforming on the fly", "Late concatenation"]
-#title = st.selectbox("Select Experiment", title_list)
 title = st.radio("Select Experiment", tuple(title_list))
 
 title_file_dict = {}
