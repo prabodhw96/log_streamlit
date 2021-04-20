@@ -43,7 +43,7 @@ def plot_loss(filename, title):
     fig.add_trace(go.Scatter(x=epoch, y=valid_loss, mode="lines+markers", name="valid loss"))
     fig.add_trace(go.Scatter(x=[loaded_epoch], y=[valid_loss[loaded_epoch-1]], mode="markers", name="Epoch loaded", 
     			  marker=dict(color="#f8766d", size=8), showlegend=True, hoverinfo="skip"))
-    fig.update_layout(title="{} {}<br>Test PER: {}".format(title, env, test_per), yaxis_range=[0,10] if "late" in filename else [0,3.5],
+    fig.update_layout(title="{} {}<br>Test PER: {}".format(title, env, test_per), yaxis_range=[0,3.5],
                       title_x=0.5, xaxis_title="Epoch", yaxis_title="Loss", hovermode="x unified")
     return fig
 
