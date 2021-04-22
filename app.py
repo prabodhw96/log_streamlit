@@ -6,13 +6,6 @@ st.set_page_config(layout="wide")
 
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
-def epoch_loaded(filename):
-	file = open("epoch_loaded.txt", 'r')
-	Lines = file.readlines()
-	for line in Lines:
-		if filename in line:
-			return int(line.split(":")[-1])
-
 def plot_loss(filename, title):
     file = open(filename, 'r')
     Lines = file.readlines()
@@ -24,6 +17,8 @@ def plot_loss(filename, title):
             valid_loss.append(line.split(" ")[11][:-1])
         if "test" in line:
             test_per = float(line.split(" ")[-1])
+        if "loaded" in line:
+            loaded_epoch = int(line.split(" ")[2])
 
     train_loss = [float(i) for i in train_loss]
     valid_loss = [float(i) for i in valid_loss]
@@ -33,8 +28,6 @@ def plot_loss(filename, title):
     env = ""
     if "env" in filename:
         env = "(env_corrupt)"
-
-    loaded_epoch = epoch_loaded(filename)
     
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=epoch, y=train_loss, mode="lines+markers", name="train loss"))
@@ -67,6 +60,6 @@ filename_env = title_file_dict[title] + "_env.txt"
 
 col1, col2 = st.beta_columns(2)
 with col1:
-	st.write(plot_loss(filename, title))
-with col2:
 	st.write(plot_loss(filename_env, title))
+with col2:
+	st.write(plot_loss(filename, title))
