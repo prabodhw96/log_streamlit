@@ -7,6 +7,7 @@ st.set_page_config(layout="wide")
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
 def plot_loss(filename, title):
+    filename = "train_logs/"+filename
     file = open(filename, 'r')
     Lines = file.readlines()
     train_loss = []
@@ -36,13 +37,14 @@ def plot_loss(filename, title):
     fig.add_trace(go.Scatter(x=epoch, y=valid_loss, mode="lines+markers", name="valid loss"))
     fig.add_trace(go.Scatter(x=[loaded_epoch], y=[valid_loss[loaded_epoch-1]], mode="markers", name="Epoch loaded", 
     			  marker=dict(color="#f8766d", size=8), showlegend=True, hoverinfo="skip"))
-    fig.update_layout(title="{} {}<br>Test PER: {}".format(title, env, test_per), yaxis_range=[0,3.5],
+    fig.update_layout(title="{} {}<br>Test PER: {}".format(title, env, test_per), yaxis_range=[0, 5],
                       title_x=0.5, xaxis_title="Epoch", yaxis_title="Loss", hovermode="x unified")
     return fig
 
 
 title_list = ["Delay and sum beamforming", "MVDR beamforming", "GeV beamforming", "Single channel",
-			  "Early concatenation", "BeamformIt", "Beamforming on the fly", "Late concatenation"]
+			  "Early concatenation", "BeamformIt", "Beamforming on the fly", "Late concatenation",
+              "Average of probabilities"]
 title = st.radio("Select Experiment", tuple(title_list))
 
 title_file_dict = {}
@@ -54,12 +56,13 @@ title_file_dict["Early concatenation"] = "train_log_early"
 title_file_dict["BeamformIt"] = "train_log_beamformit"
 title_file_dict["Beamforming on the fly"] = "train_log_fly"
 title_file_dict["Late concatenation"] = "train_log_late"
+title_file_dict["Average of probabilities"] = "train_log_avg_prob"
 
 filename = title_file_dict[title] + ".txt"
 filename_env = title_file_dict[title] + "_env.txt"
 
 col1, col2 = st.beta_columns(2)
 with col1:
-	st.write(plot_loss(filename_env, title))
+	st.plotly_chart(plot_loss(filename_env, title))
 with col2:
-	st.write(plot_loss(filename, title))
+	st.plotly_chart(plot_loss(filename, title))
