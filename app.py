@@ -1,10 +1,16 @@
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
 st.set_page_config(layout="wide")
 
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+
+@st.cache(allow_output_mutation=True)
+def load_df(filename):
+    df = pd.read_csv(filename)
+    return df
 
 def plot_loss(filename, title):
     filename = "train_logs/"+filename
@@ -42,9 +48,9 @@ def plot_loss(filename, title):
     return fig
 
 
-title_list = ["Delay and sum beamforming", "MVDR beamforming", "GeV beamforming", "Single channel",
-			  "Early concatenation", "BeamformIt", "Beamforming on the fly", "Late concatenation",
-              "Average of probabilities"]
+title_list = ["Single channel", "Delay and sum beamforming", "MVDR beamforming", "GeV beamforming",
+              "BeamformIt", "Beamforming on the fly", "Average of probabilities","Early concatenation",
+              "Mid-concatenation", "Late concatenation"]
 title = st.radio("Select Experiment", tuple(title_list))
 
 title_file_dict = {}
@@ -57,6 +63,7 @@ title_file_dict["BeamformIt"] = "train_log_beamformit"
 title_file_dict["Beamforming on the fly"] = "train_log_fly"
 title_file_dict["Late concatenation"] = "train_log_late"
 title_file_dict["Average of probabilities"] = "train_log_avg_prob"
+title_file_dict["Mid-concatenation"] = "train_log_mid"
 
 filename = title_file_dict[title] + ".txt"
 filename_env = title_file_dict[title] + "_env.txt"
@@ -66,3 +73,12 @@ with col1:
 	st.plotly_chart(plot_loss(filename_env, title))
 with col2:
 	st.plotly_chart(plot_loss(filename, title))
+
+df = load_df("PER.csv")
+_, col3, _ = st.beta_columns([0.25, 0.5, 0.25])
+with col3:
+    sort = st.radio("Sort by", ("PER (env_corruption)", "PER"))
+    if sort == "PER (env_corruption)":
+        st.table(df.sort_values(by="PER (env_corruption)"))
+    if sort == "PER":
+        st.table(df.sort_values(by="PER"))
