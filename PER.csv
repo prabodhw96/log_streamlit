@@ -1,11 +1,11 @@
 Experiment,PER (env_corruption),PER
-Mid-concatenation,24.76,25.8
-Early concatenation,24.89,25.76
 Average of probabilities,25.8,26.28
-Late concatenation,26.33,26.01
+Beamforming on the fly,26.18,26.57
 BeamformIt,26.48,27.05
 Delay and sum beamforming,27,28.01
-Beamforming on the fly,26.18,26.57
+Early concatenation,24.89,25.76
 GeV beamforming,28.29,28.25
+Late concatenation,26.33,26.01
+Mid-concatenation,25.39,25.07
 MVDR beamforming,28.32,28.93
 Single channel,29.15,29.54
