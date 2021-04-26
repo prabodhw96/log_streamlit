@@ -79,6 +79,6 @@ _, col3, _ = st.beta_columns([0.25, 0.5, 0.25])
 with col3:
     sort = st.radio("Sort by", ("PER (env_corruption)", "PER"))
     if sort == "PER (env_corruption)":
-        st.table(df.sort_values(by="PER (env_corruption)"))
+        st.table(df.sort_values(by="PER (env_corruption)").reset_index(drop=True))
     if sort == "PER":
-        st.table(df.sort_values(by="PER"))
+        st.table(df.sort_values(by="PER").reset_index(drop=True))
