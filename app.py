@@ -85,7 +85,7 @@ title_list = [
     "Single channel",
     "Delay and sum beamforming",
     "MVDR beamforming",
-    "GeV beamforming",
+    "Gev beamforming",
     "BeamformIt",
     "Beamforming on the fly",
     "Averaging probabilities",
@@ -98,7 +98,7 @@ title = st.radio("Select Experiment", tuple(title_list))
 title_file_dict = {}
 title_file_dict["Delay and sum beamforming"] = "train_log_das"
 title_file_dict["MVDR beamforming"] = "train_log_mvdr"
-title_file_dict["GeV beamforming"] = "train_log_gev"
+title_file_dict["Gev beamforming"] = "train_log_gev"
 title_file_dict["Single channel"] = "train_log_la2"
 title_file_dict["Early concatenation"] = "train_log_early"
 title_file_dict["BeamformIt"] = "train_log_beamformit"
