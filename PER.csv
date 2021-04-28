@@ -1,4 +1,4 @@
-Experiment,PER (env_corruption),PER
+Experiment,PER (env_corrupt),PER
 Averaging probabilities,25.8,26.28
 Beamforming on the fly,26.18,26.57
 BeamformIt,26.48,27.05
