@@ -120,7 +120,7 @@ df = load_df("PER.csv")
 _, col3, _ = st.beta_columns([0.25, 0.5, 0.25])
 with col3:
     sort = st.radio("Sort by", ("PER (env_corrupt)", "PER"))
-    if sort == "PER (env_corruption)":
+    if sort == "PER (env_corrupt)":
         st.table(df.sort_values(by="PER (env_corrupt)").reset_index(drop=True))
     if sort == "PER":
         st.table(df.sort_values(by="PER").reset_index(drop=True))
