@@ -88,7 +88,7 @@ title_list = [
     "GeV beamforming",
     "BeamformIt",
     "Beamforming on the fly",
-    "Average of probabilities",
+    "Averaging probabilities",
     "Early concatenation",
     "Mid-concatenation",
     "Late concatenation",
@@ -104,7 +104,7 @@ title_file_dict["Early concatenation"] = "train_log_early"
 title_file_dict["BeamformIt"] = "train_log_beamformit"
 title_file_dict["Beamforming on the fly"] = "train_log_fly"
 title_file_dict["Late concatenation"] = "train_log_late"
-title_file_dict["Average of probabilities"] = "train_log_avg_prob"
+title_file_dict["Averaging probabilities"] = "train_log_avg_prob"
 title_file_dict["Mid-concatenation"] = "train_log_mid"
 
 filename = title_file_dict[title] + ".txt"
@@ -119,8 +119,8 @@ with col2:
 df = load_df("PER.csv")
 _, col3, _ = st.beta_columns([0.25, 0.5, 0.25])
 with col3:
-    sort = st.radio("Sort by", ("PER (env_corruption)", "PER"))
+    sort = st.radio("Sort by", ("PER (env_corrupt)", "PER"))
     if sort == "PER (env_corruption)":
-        st.table(df.sort_values(by="PER (env_corruption)").reset_index(drop=True))
+        st.table(df.sort_values(by="PER (env_corrupt)").reset_index(drop=True))
     if sort == "PER":
         st.table(df.sort_values(by="PER").reset_index(drop=True))
