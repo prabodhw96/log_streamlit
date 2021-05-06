@@ -139,8 +139,8 @@ dense_dict["Single channel"] = "2 dense blocks with 4 layers each"
 dense_dict["Delay and sum beamforming"] = "2 dense blocks with 4 layers each"
 dense_dict["Early concatenation"] = "2 dense blocks with 3 layers each"
 
-df_dn = load_df("PER_DN.csv")
 col_dense1, col_dense2 = st.beta_columns(2)
+df_dn = load_df("PER_DN.csv")
 with col_dense1:
     st.markdown("# DenseNet")
     title_dense = st.radio("Select Experiment", tuple(densenet_title_list))
@@ -150,5 +150,22 @@ with col_dense1:
     st.plotly_chart(plot_loss(filename_dense, title_dense.split(" (")[0]))
     st.table(df_dn.sort_values(by="PER (env_corrupt)").reset_index(drop=True))
 
-#with col_dense2:
-#    st.plotly_chart(plot_loss(filename, title))
+# ResNet
+resnet_title_list = ["Single channel", "Mid-concatenation"]
+
+title_file_dict["Single channel (ResNet)"] = "train_log_resnet_la2_env"
+title_file_dict["Mid-concatenation (ResNet)"] = "train_log_resnet_mid_env"
+
+res_dict = {}
+res_dict["Single channel"] = "3 residual blocks with 3 layers each"
+res_dict["Mid-concatenation"] = "3 residual blocks with 3 layers each"
+
+df_rn = load_df("PER_RN.csv")
+with col_dense2:
+    st.markdown("# ResNet")
+    title_res = st.radio("Select Experiment", tuple(resnet_title_list))
+    st.markdown("<center><i>{}<br>(128, 128, 128)</i><center>".format(res_dict[title_res]), unsafe_allow_html=True)
+    title_res += " (ResNet)"
+    filename_res = title_file_dict[title_res] + ".txt"
+    st.plotly_chart(plot_loss(filename_res, title_res.split(" (")[0]))
+    st.table(df_rn.sort_values(by="PER (env_corrupt)").reset_index(drop=True))
