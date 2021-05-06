@@ -144,7 +144,7 @@ col_dense1, col_dense2 = st.beta_columns(2)
 with col_dense1:
     st.markdown("# DenseNet")
     title_dense = st.radio("Select Experiment", tuple(densenet_title_list))
-    st.markdown("<center><i>{}</i><center>".format(dense_dict[title_dense]), unsafe_allow_html=True)
+    st.markdown("<center><i>{}<br>(128, 256)</i><center>".format(dense_dict[title_dense]), unsafe_allow_html=True)
     title_dense += " (DenseNet)"
     filename_dense = title_file_dict[title_dense] + ".txt"
     st.plotly_chart(plot_loss(filename_dense, title_dense.split(" (")[0]))
