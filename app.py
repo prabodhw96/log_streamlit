@@ -17,7 +17,7 @@ def load_df(filename):
     return df
 
 
-def plot_loss(filename, title):
+def plot_loss(filename, title, model=None):
     filename = "train_logs/" + filename
     file = open(filename, "r")
     Lines = file.readlines()
@@ -78,6 +78,10 @@ def plot_loss(filename, title):
         yaxis_title="Loss",
         hovermode="x unified",
     )
+    #img_name = "images/{} {}.png".format(title, env)
+    #if model is not None:
+    #    img_name = img_name.replace("images", "images/{}".format(model))
+    #fig.write_image(img_name)
     return fig
 
 
@@ -147,7 +151,7 @@ with col_dense1:
     st.markdown("<center><i>{}<br>(128, 256)</i><center>".format(dense_dict[title_dense]), unsafe_allow_html=True)
     title_dense += " (DenseNet)"
     filename_dense = title_file_dict[title_dense] + ".txt"
-    st.plotly_chart(plot_loss(filename_dense, title_dense.split(" (")[0]))
+    st.plotly_chart(plot_loss(filename_dense, title_dense.split(" (")[0], model="DenseNet"))
     st.table(df_dn.sort_values(by="PER (env_corrupt)").reset_index(drop=True))
 
 # ResNet
@@ -167,5 +171,5 @@ with col_dense2:
     st.markdown("<center><i>{}<br>(128, 128, 128)</i><center>".format(res_dict[title_res]), unsafe_allow_html=True)
     title_res += " (ResNet)"
     filename_res = title_file_dict[title_res] + ".txt"
-    st.plotly_chart(plot_loss(filename_res, title_res.split(" (")[0]))
+    st.plotly_chart(plot_loss(filename_res, title_res.split(" (")[0], model="ResNet"))
     st.table(df_rn.sort_values(by="PER (env_corrupt)").reset_index(drop=True))
