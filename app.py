@@ -81,6 +81,8 @@ def plot_loss(filename, title):
     return fig
 
 
+st.markdown("# Experiments")
+
 title_list = [
     "Single channel",
     "Delay and sum beamforming",
@@ -124,3 +126,29 @@ with col3:
         st.table(df.sort_values(by="PER (env_corrupt)").reset_index(drop=True))
     if sort == "PER":
         st.table(df.sort_values(by="PER").reset_index(drop=True))
+
+# DenseNet
+densenet_title_list = ["Single channel", "Delay and sum beamforming", "Early concatenation"]
+
+title_file_dict["Delay and sum beamforming (DenseNet)"] = "train_log_densenet_das_env"
+title_file_dict["Early concatenation (DenseNet)"] = "train_log_densenet_early_env"
+title_file_dict["Single channel (DenseNet)"] = "train_log_densenet_la2_env"
+
+dense_dict = {}
+dense_dict["Single channel"] = "2 dense blocks with 4 layers each"
+dense_dict["Delay and sum beamforming"] = "2 dense blocks with 4 layers each"
+dense_dict["Early concatenation"] = "2 dense blocks with 3 layers each"
+
+df_dn = load_df("PER_DN.csv")
+col_dense1, col_dense2 = st.beta_columns(2)
+with col_dense1:
+    st.markdown("# DenseNet")
+    title_dense = st.radio("Select Experiment", tuple(densenet_title_list))
+    st.markdown("<center><i>{}</i><center>".format(dense_dict[title_dense]), unsafe_allow_html=True)
+    title_dense += " (DenseNet)"
+    filename_dense = title_file_dict[title_dense] + ".txt"
+    st.plotly_chart(plot_loss(filename_dense, title_dense.split(" (")[0]))
+    st.table(df_dn.sort_values(by="PER (env_corrupt)").reset_index(drop=True))
+
+#with col_dense2:
+#    st.plotly_chart(plot_loss(filename, title))
